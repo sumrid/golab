@@ -1,0 +1,11 @@
+dev:
+  project_code: DEV
+  maintenance: false
+
+sit:
+  project_code: SIT
+  maintenance: false
+
+prod:
+  project_code: PROD
+  maintenance: false
