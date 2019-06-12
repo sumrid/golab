@@ -14,22 +14,22 @@ import (
 
 func main() {
 	t := time.Now()
-	c := make(chan bool, 150)
+	c := make(chan int, 500)
 
 	for i := 0; i < cap(c); i++ {
-		// go GetLoad(c)
-		go PostLoad(c)
-		// fmt.Println(<-c)
+		go GetLoad(c, i)
+		// go PostLoad(c, i)
 	}
 
-	<-c
-	fmt.Println("tiem:", time.Since(t))
-
+	for i := 0; i < cap(c); i++ {
+		fmt.Println(<-c) // รอให้ทุกตัวส่งค่ากลับมา
+	}
+	fmt.Println("time:", time.Since(t)) // จบการทำงาน พร้อมกับแสดงเวลาที่ใช้ไป
 }
 
-// GetLoad ทำการเรียกไปยัง function
+// GetLoad ทำการเรียกไปยัง endpoint GET:/book
 // Ref: https://www.thepolyglotdeveloper.com/2017/07/consume-restful-api-endpoints-golang-application/
-func GetLoad(c chan bool) {
+func GetLoad(c chan int, i int) {
 	// Call endpoint
 	res, err := http.Get("http://localhost/book")
 	if err != nil {
@@ -43,10 +43,11 @@ func GetLoad(c chan bool) {
 	}
 	fmt.Println(string(data))
 
-	c <- true
+	c <- i // ส่งค่าผ่าน channel
 }
 
-func PostLoad(c chan bool) {
+// PostLoad ทำการเรียกไปยัง endpoint POST:/book
+func PostLoad(c chan int, i int) {
 	// Create and generate data
 	book := model.Book{}
 	generateBook(&book)
@@ -64,7 +65,7 @@ func PostLoad(c chan bool) {
 	}
 	fmt.Println(string(data))
 
-	c <- true
+	c <- i // ส่งค่าผ่าน channel
 }
 
 func generateBook(b *model.Book) {
