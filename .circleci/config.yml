@@ -8,6 +8,10 @@ jobs:
       - checkout:
           path: ~/golab
       - run:
+          name: install git
+          command: |
+            apk update && apk add gcc git
+      - run:
           name: install dependencies
           command: |
             go get -d -v ./...
