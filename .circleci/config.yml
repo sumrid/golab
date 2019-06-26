@@ -6,10 +6,10 @@ jobs:
     working_directory: /go/src/github.com/sumrid/golab/go_echo
     steps:
       - run:
-        name: install dependencies
-        command: |
-          go get -d -v ./...
-          go install -v ./...
+          name: install dependencies
+          command: |
+            go get -d -v ./...
+            go install -v ./...
 
 workflows:
     version: 2
