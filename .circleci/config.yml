@@ -1,14 +1,15 @@
 version: 2
 jobs:
   build:
-    - image: circleci/golang:1.12
-  working_directory: /go/src/github.com/sumrid/golab/go_echo
-  steps:
-    - run:
-      name: install dependencies
-      command: |
-        go get -d -v ./...
-        go install -v ./...
+    docker:
+      - image: circleci/golang:1.12
+    working_directory: /go/src/github.com/sumrid/golab/go_echo
+    steps:
+      - run:
+        name: install dependencies
+        command: |
+          go get -d -v ./...
+          go install -v ./...
 
 workflows:
     version: 2
