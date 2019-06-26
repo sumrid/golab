@@ -6,7 +6,7 @@ jobs:
     working_directory: /go/src/github.com/sumrid/golab/go_echo
     steps:
       - checkout:
-          path: ~/soa2019_group8
+          path: ~/golab
       - run:
           name: install dependencies
           command: |
