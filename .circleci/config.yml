@@ -3,7 +3,7 @@ jobs:
   go-echo:
     docker:
       - image: circleci/golang:1.12
-    working_directory: ~/golab/
+    working_directory: ~/golab/go_echo
     steps:
       - checkout:
           path: ~/golab
