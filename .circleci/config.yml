@@ -1,24 +1,24 @@
 version: 2
 jobs:
-  build:
+  go-echo:
     docker:
       - image: circleci/golang:1.12
-    working_directory: /go/src/github.com/sumrid/golab/go_echo
+    working_directory: ~/golab/
     steps:
       - checkout:
           path: ~/golab
       - run:
-          name: install git
-          command: |
-            apk update && apk add gcc git
-      - run:
           name: install dependencies
           command: |
-            go get -d -v ./...
-            go install -v ./...
+            go mod tidy
+            go mod download
+      - run:
+          name: run test
+          command: |
+            go test
 
 workflows:
     version: 2
     workflow:
       jobs:
-        - build
+        - go-echo
